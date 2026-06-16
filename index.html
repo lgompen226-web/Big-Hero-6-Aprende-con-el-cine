@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprendemos con el cine · Big Hero 6</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Orbitron:wght@700;900&display=swap');
+
+  :root {
+    --azul-hiro: #1a2f6e;
+    --azul-medio: #2451b7;
+    --cyan-baymax: #00c8e0;
+    --blanco-baymax: #f0f8ff;
+    --rojo-accion: #e8333a;
+    --amarillo-miel: #f5c842;
+    --gris-oscuro: #1c1c2e;
+    --gris-medio: #2e3250;
+    --texto-claro: #e8f0ff;
+    --verde-ok: #2ecc71;
+    --naranja-gogo: #ff6b35;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--gris-oscuro);
+    color: var(--texto-claro);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--azul-hiro) 0%, var(--gris-medio) 50%, var(--azul-hiro) 100%);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--cyan-baymax);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,200,224,0.3);
+  }
+
+  .header-titulo {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header-serie {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan-baymax);
+    font-weight: 600;
+  }
+
+  .header-nombre {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 1px;
+  }
+
+  .header-nombre span {
+    color: var(--cyan-baymax);
+  }
+
+  .header-info {
+    font-size: 0.7rem;
+    color: #8899cc;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  /* NAVEGACIÓN */
+  nav {
+    background: var(--gris-medio);
+    padding: 10px 16px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(0,200,224,0.2);
+    justify-content: center;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid rgba(0,200,224,0.3);
+    color: #8899cc;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-btn:hover, .nav-btn.activo {
+    background: var(--cyan-baymax);
+    border-color: var(--cyan-baymax);
+    color: var(--gris-oscuro);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0,200,224,0.4);
+  }
+
+  /* SECCIONES */
+  .seccion {
+    display: none;
+    padding: 28px 24px;
+    max-width: 960px;
+    margin: 0 auto;
+    animation: fadeIn 0.35s ease;
+  }
+
+  .seccion.visible { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* TITULAR DE SECCIÓN */
+  .sec-titulo {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--cyan-baymax);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sec-subtitulo {
+    font-size: 0.85rem;
+    color: #8899cc;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(0,200,224,0.15);
+  }
+
+  /* NOTA DOCENTE */
+  .nota-docente {
+    background: linear-gradient(135deg, rgba(0,200,224,0.08), rgba(0,200,224,0.03));
+    border-left: 3px solid var(--cyan-baymax);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+    color: var(--cyan-baymax);
+    line-height: 1.6;
+  }
+
+  .nota-docente strong { color: white; }
+
+  /* TARJETAS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px; }
+
+  .tarjeta {
+    background: linear-gradient(135deg, var(--gris-medio), rgba(46,50,80,0.6));
+    border: 1px solid rgba(0,200,224,0.2);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.2s;
+  }
+
+  .tarjeta:hover {
+    border-color: var(--cyan-baymax);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,200,224,0.15);
+  }
+
+  .tarjeta-emoji { font-size: 2rem; margin-bottom: 8px; display: block; }
+  .tarjeta-nombre {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+  }
+
+  .tarjeta-rol {
+    font-size: 0.7rem;
+    color: var(--cyan-baymax);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .tarjeta-texto { font-size: 0.8rem; color: #aabbd4; line-height: 1.5; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  .badge-valor { background: rgba(46,204,113,0.2); color: #2ecc71; border: 1px solid #2ecc71; }
+  .badge-antivalor { background: rgba(232,51,58,0.2); color: #e8333a; border: 1px solid #e8333a; }
+  .badge-referente { background: rgba(0,200,224,0.2); color: var(--cyan-baymax); border: 1px solid var(--cyan-baymax); }
+  .badge-femenino { background: rgba(245,200,66,0.2); color: var(--amarillo-miel); border: 1px solid var(--amarillo-miel); }
+
+  /* BOTONES */
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+
+  .btn-cyan {
+    background: var(--cyan-baymax);
+    color: var(--gris-oscuro);
+  }
+
+  .btn-cyan:hover {
+    background: #00e8ff;
+    box-shadow: 0 4px 15px rgba(0,200,224,0.5);
+    transform: translateY(-1px);
+  }
+
+  .btn-rojo {
+    background: var(--rojo-accion);
+    color: white;
+  }
+
+  .btn-rojo:hover {
+    background: #ff4a50;
+    box-shadow: 0 4px 15px rgba(232,51,58,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--cyan-baymax);
+    color: var(--cyan-baymax);
+  }
+
+  .btn-outline:hover {
+    background: rgba(0,200,224,0.1);
+  }
+
+  /* REVEAL */
+  .reveal-box {
+    background: rgba(0,200,224,0.08);
+    border: 1px dashed rgba(0,200,224,0.4);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 10px;
+    display: none;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--texto-claro);
+  }
+
+  .reveal-box.visible { display: block; animation: fadeIn 0.3s ease; }
+
+  /* LÍNEA DE TIEMPO */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--cyan-baymax), var(--azul-medio));
+  }
+
+  .tl-item {
+    position: relative;
+    padding: 12px 14px 12px 20px;
+    margin-bottom: 14px;
+    background: var(--gris-medio);
+    border-radius: 10px;
+    border: 1px solid rgba(0,200,224,0.15);
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: 18px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cyan-baymax);
+    border: 2px solid var(--gris-oscuro);
+  }
+
+  .tl-acto {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan-baymax);
+    margin-bottom: 3px;
+  }
+
+  .tl-titulo { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; color: white; }
+  .tl-texto { font-size: 0.8rem; color: #aabbd4; line-height: 1.5; }
+
+  .pregunta-vida {
+    margin-top: 8px;
+    background: rgba(0,200,224,0.07);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    color: var(--cyan-baymax);
+  }
+
+  .pregunta-vida::before { content: '💬 '; }
+
+  /* DILEMAS */
+  .dilema-card {
+    background: var(--gris-medio);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(232,51,58,0.2);
+  }
+
+  .dilema-escena {
+    font-size: 0.8rem;
+    color: var(--rojo-accion);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .dilema-texto { font-size: 0.95rem; font-weight: 700; color: white; margin-bottom: 14px; }
+  .dilema-opciones { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .opc-btn {
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: 2px solid rgba(0,200,224,0.3);
+    background: transparent;
+    color: var(--texto-claro);
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .opc-btn:hover {
+    border-color: var(--cyan-baymax);
+    background: rgba(0,200,224,0.1);
+    transform: translateY(-1px);
+  }
+
+  .opc-btn.seleccionada {
+    background: var(--cyan-baymax);
+    border-color: var(--cyan-baymax);
+    color: var(--gris-oscuro);
+  }
+
+  /* IA SECCIÓN */
+  .ia-comparativa {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .ia-col {
+    background: var(--gris-medio);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .ia-col-titulo {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,200,224,0.2);
+  }
+
+  .ia-col.ficcion .ia-col-titulo { color: var(--amarillo-miel); }
+  .ia-col.realidad .ia-col-titulo { color: var(--cyan-baymax); }
+
+  .ia-item {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #aabbd4;
+  }
+
+  .ia-item-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .ficcion .ia-item-dot { background: var(--amarillo-miel); }
+  .realidad .ia-item-dot { background: var(--cyan-baymax); }
+
+  /* TARJETAS FLIP para ciencia ficción */
+  .flip-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .flip-card {
+    perspective: 600px;
+    height: 120px;
+    cursor: pointer;
+  }
+
+  .flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+
+  .flip-card.girada .flip-inner { transform: rotateY(180deg); }
+
+  .flip-front, .flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .flip-front {
+    background: linear-gradient(135deg, var(--azul-hiro), var(--gris-medio));
+    border: 1px solid rgba(0,200,224,0.3);
+  }
+
+  .flip-back {
+    transform: rotateY(180deg);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    font-weight: 600;
+  }
+
+  .flip-back.es-realidad {
+    background: linear-gradient(135deg, rgba(46,204,113,0.2), rgba(0,200,224,0.2));
+    border: 2px solid var(--verde-ok);
+    color: var(--verde-ok);
+  }
+
+  .flip-back.es-ficcion {
+    background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(255,107,53,0.15));
+    border: 2px solid var(--amarillo-miel);
+    color: var(--amarillo-miel);
+  }
+
+  .flip-front-texto { font-size: 0.78rem; color: #aabbd4; margin-top: 4px; }
+  .flip-front-emoji { font-size: 1.8rem; }
+
+  /* NORMAS FINALES */
+  .norma-input {
+    width: 100%;
+    background: rgba(0,200,224,0.05);
+    border: 1px solid rgba(0,200,224,0.3);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .norma-input:focus { border-color: var(--cyan-baymax); }
+  .norma-input::placeholder { color: #556688; }
+
+  /* BOTÓN REVELAR PERSONALIZADO */
+  .btn-revelar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,200,224,0.4);
+    background: transparent;
+    color: var(--cyan-baymax);
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+
+  .btn-revelar:hover {
+    background: rgba(0,200,224,0.12);
+    border-color: var(--cyan-baymax);
+  }
+
+  .btn-revelar.abierto {
+    background: rgba(0,200,224,0.15);
+    border-color: var(--cyan-baymax);
+  }
+
+  .btn-revelar-pista {
+    border-color: rgba(245,200,66,0.4);
+    color: var(--amarillo-miel);
+  }
+
+  .btn-revelar-pista:hover {
+    background: rgba(245,200,66,0.08);
+    border-color: var(--amarillo-miel);
+  }
+
+  /* CAJAS DE DEBATE */
+  .debate-box {
+    background: rgba(0,200,224,0.06);
+    border: 1px solid rgba(0,200,224,0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 12px;
+  }
+
+  .debate-titulo {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--cyan-baymax);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .debate-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .debate-lista li {
+    font-size: 0.8rem;
+    color: #aabbd4;
+    line-height: 1.5;
+    padding: 5px 0 5px 14px;
+    position: relative;
+    border-bottom: 1px solid rgba(0,200,224,0.08);
+  }
+
+  .debate-lista li:last-child { border-bottom: none; }
+
+  .debate-lista li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan-baymax);
+    font-size: 0.7rem;
+  }
+
+  /* CAJAS DE PISTA */
+  .pista-box {
+    background: rgba(245,200,66,0.06);
+    border: 1px solid rgba(245,200,66,0.25);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #aabbd4;
+    line-height: 1.6;
+  }
+
+  .pista-box strong { color: var(--amarillo-miel); }
+  .pista-box em { color: white; font-style: italic; }
+
+  /* NORMA BLOQUE */
+  .norma-bloque {
+    background: var(--gris-medio);
+    border: 1px solid rgba(0,200,224,0.12);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+
+  .norma-pregunta {
+    font-size: 0.8rem;
+    color: #8899cc;
+    margin-top: 4px;
+    padding-left: 32px;
+    font-style: italic;
+  }
+
+  .norma-numero {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--cyan-baymax);
+    color: var(--gris-oscuro);
+    font-weight: 900;
+    font-size: 0.8rem;
+    text-align: center;
+    line-height: 24px;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  .norma-fila {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  /* TEST */
+  .test-pregunta {
+    background: var(--gris-medio);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(0,200,224,0.15);
+    display: none;
+  }
+
+  .test-pregunta.activa { display: block; animation: fadeIn 0.3s ease; }
+
+  .test-categoria {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan-baymax);
+    margin-bottom: 6px;
+  }
+
+  .test-enunciado {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+
+  .test-opciones { display: flex; flex-direction: column; gap: 8px; }
+
+  .test-opc {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,200,224,0.2);
+    background: transparent;
+    color: var(--texto-claro);
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: left;
+    transition: all 0.2s;
+  }
+
+  .test-opc:hover:not(:disabled) {
+    border-color: var(--cyan-baymax);
+    background: rgba(0,200,224,0.08);
+  }
+
+  .test-opc.correcta { background: rgba(46,204,113,0.2); border-color: #2ecc71; color: #2ecc71; }
+  .test-opc.incorrecta { background: rgba(232,51,58,0.2); border-color: #e8333a; color: #e8333a; }
+
+  .test-feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    display: none;
+    line-height: 1.5;
+  }
+
+  .test-feedback.ok {
+    background: rgba(46,204,113,0.1);
+    border: 1px solid #2ecc71;
+    color: #2ecc71;
+    display: block;
+  }
+
+  .test-feedback.mal {
+    background: rgba(232,51,58,0.1);
+    border: 1px solid #e8333a;
+    color: #f08080;
+    display: block;
+  }
+
+  .test-barra {
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .test-progreso {
+    height: 100%;
+    background: linear-gradient(to right, var(--azul-medio), var(--cyan-baymax));
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  .test-contador {
+    font-size: 0.75rem;
+    color: #8899cc;
+    margin-bottom: 14px;
+  }
+
+  /* RESULTADO FINAL */
+  .resultado-final {
+    text-align: center;
+    padding: 30px;
+    display: none;
+  }
+
+  .resultado-final.visible { display: block; animation: fadeIn 0.5s ease; }
+
+  .resultado-puntos {
+    font-family: 'Orbitron', monospace;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--cyan-baymax);
+    margin-bottom: 8px;
+  }
+
+  .resultado-mensaje {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
+  }
+
+  .resultado-sub { font-size: 0.85rem; color: #8899cc; }
+
+  /* PANTALLA BIENVENIDA */
+  .bienvenida-hero {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .bienvenida-logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .bienvenida-logo .big { color: white; }
+  .bienvenida-logo .hero { color: var(--cyan-baymax); }
+  .bienvenida-logo .num { color: var(--rojo-accion); }
+
+  .bienvenida-subtitulo {
+    font-size: 0.85rem;
+    color: #8899cc;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .bienvenida-baymax {
+    font-size: 6rem;
+    display: block;
+    margin: 0 auto 20px;
+    filter: drop-shadow(0 0 30px rgba(0,200,224,0.5));
+    animation: flotando 3s ease-in-out infinite;
+  }
+
+  @keyframes flotando {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .bienvenida-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .info-chip {
+    background: rgba(0,200,224,0.1);
+    border: 1px solid rgba(0,200,224,0.3);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    color: var(--cyan-baymax);
+    font-weight: 600;
+  }
+
+  .separador {
+    border: none;
+    border-top: 1px solid rgba(0,200,224,0.1);
+    margin: 20px 0;
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(0,200,224,0.1), rgba(36,81,183,0.1));
+    border: 1px solid rgba(0,200,224,0.25);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+
+  .highlight-box strong { color: var(--cyan-baymax); }
+
+  footer {
+    text-align: center;
+    padding: 16px;
+    font-size: 0.7rem;
+    color: #445566;
+    border-top: 1px solid rgba(0,200,224,0.1);
+    margin-top: 30px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-titulo">
+    <span class="header-serie">🎬 Aprendemos con el cine</span>
+    <span class="header-nombre">BIG HERO <span>6</span></span>
+  </div>
+  <div class="header-info">
+    Educación Física · 3er ciclo Primaria<br>
+    CEIP San Fernando · Dos Hermanas · Sevilla
+  </div>
+</header>
+
+<nav>
+  <button class="nav-btn activo" onclick="ir('bienvenida',this)">🏠 Inicio</button>
+  <button class="nav-btn" onclick="ir('historia',this)">🎬 La historia</button>
+  <button class="nav-btn" onclick="ir('personajes',this)">👥 Personajes</button>
+  <button class="nav-btn" onclick="ir('valores',this)">⚽ Valores en EF</button>
+  <button class="nav-btn" onclick="ir('ia',this)">🤖 Baymax e IA</button>
+  <button class="nav-btn" onclick="ir('dilemas',this)">🧠 ¿Qué harías tú?</button>
+  <button class="nav-btn" onclick="ir('normas',this)">📋 Nuestras normas</button>
+  <button class="nav-btn" onclick="ir('test',this)">✅ Test final</button>
+</nav>
+
+
+<!-- ===== SECCIÓN BIENVENIDA ===== -->
+<section id="bienvenida" class="seccion visible">
+  <div class="bienvenida-hero">
+    <span class="bienvenida-baymax">🤖</span>
+    <div class="bienvenida-logo">
+      <span class="big">BIG </span><span class="hero">HERO </span><span class="num">6</span>
+    </div>
+    <p class="bienvenida-subtitulo">Valores · Equipo · Inteligencia Artificial · Educación Física</p>
+
+    <div class="bienvenida-info">
+      <span class="info-chip">🎬 Disney Animation · 2014</span>
+      <span class="info-chip">🏆 Oscar Mejor Película de Animación</span>
+      <span class="info-chip">📍 San Fransokyo</span>
+      <span class="info-chip">🎓 3er ciclo Primaria</span>
+    </div>
+
+    <div class="highlight-box">
+      <strong>¿De qué va esta actividad?</strong><br>
+      Hiro es un chico de 14 años con un talento enorme y sin rumbo. Cuando pierde a su hermano Tadashi,
+      descubre que el robot que él creó —Baymax— puede ser mucho más que una máquina.
+      Junto a un equipo de amigos muy distintos entre sí, tendrá que aprender que el talento solo no basta.
+      Que el dolor puede convertirse en fuerza. Y que cuidar a los demás es el mayor superpoder.
+    </div>
+
+    <div class="highlight-box">
+      <strong>¿Cómo funciona esta actividad?</strong><br>
+      Tu profe va guiando cada sección. Hay preguntas para debatir en clase, dilemas para votar,
+      tarjetas para girar y un test final. Al terminar, cada uno completa su cuestionario individual.
+    </div>
+
+    <button class="btn btn-cyan" onclick="ir('historia', document.querySelectorAll('.nav-btn')[1])">
+      Comenzar →
+    </button>
+  </div>
+</section>
+
+<!-- ===== SECCIÓN HISTORIA ===== -->
+<section id="historia" class="seccion">
+  <div class="sec-titulo">🎬 La historia</div>
+  <p class="sec-subtitulo">Línea de tiempo de la película · Pregunta en voz alta antes de revelar cada bloque</p>
+
+  <div class="nota-docente">
+    <strong>Nota para el docente:</strong> Lee la descripción de cada acto en voz alta.
+    Después haz la pregunta de "vida real" al grupo antes de pulsar para revelar el siguiente.
+    No hay prisa. Deja que el debate fluya.
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-acto">Acto I · El comienzo</div>
+      <div class="tl-titulo">Hiro, un genio sin dirección</div>
+      <div class="tl-texto">
+        Hiro Hamada tiene 14 años, ha terminado el instituto con matrícula y ahora
+        se dedica a ganar dinero en peleas clandestinas de robots. Su hermano mayor Tadashi
+        lo lleva a su universidad —el SFIT— para que conozca a sus amigos y al profesor Callaghan.
+        Hiro descubre que quiere algo más.
+      </div>
+      <div class="pregunta-vida">
+        ¿Alguna vez habéis tenido mucho talento para algo pero no sabíais para qué usarlo?
+        ¿Qué pasó?
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-acto">Acto I · La pérdida</div>
+      <div class="tl-titulo">El incendio y la muerte de Tadashi</div>
+      <div class="tl-texto">
+        Hiro presenta sus microbots en el SFIT y los gana todos. Esa misma noche, el edificio
+        arde. Tadashi entra a rescatar al profesor Callaghan. Hay una explosión. Tadashi no sale.
+        Hiro queda destrozado y no quiere hacer nada.
+      </div>
+      <div class="pregunta-vida">
+        ¿Cómo reaccionáis cuando algo muy importante se rompe de golpe?
+        ¿Habéis visto a alguien que haya perdido las ganas después de una derrota o una lesión?
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-acto">Acto II · El equipo</div>
+      <div class="tl-titulo">Baymax y los amigos de Tadashi</div>
+      <div class="tl-texto">
+        Baymax, el robot sanitario de Tadashi, se activa al oír a Hiro gemir de dolor.
+        Hiro descubre que sus microbots los tiene un villano enmascarado. Los amigos de Tadashi
+        —Go Go, Honey Lemon, Wasabi y Fred— se unen. Cada uno aporta lo que sabe.
+        Hiro les fabrica trajes. El equipo nace.
+      </div>
+      <div class="pregunta-vida">
+        ¿Cuándo habéis formado un equipo con personas muy distintas a vosotros?
+        ¿Qué aporta cada persona diferente a un grupo?
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-acto">Acto II · La trampa</div>
+      <div class="tl-titulo">Hiro pierde el control</div>
+      <div class="tl-texto">
+        El villano resulta ser el profesor Callaghan, que finge su muerte para vengarse de Krei,
+        el empresario que causó la desaparición de su hija. Hiro, enfadado, reprograma a Baymax
+        para atacar. El equipo lo detiene y le devuelve el chip de cuidado.
+      </div>
+      <div class="pregunta-vida">
+        ¿Alguna vez habéis hecho algo de lo que os arrepentisteis cuando estabais muy enfadados?
+        ¿Cómo os sentisteis después?
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-acto">Acto III · El final</div>
+      <div class="tl-titulo">Sacrificio y nueva vida</div>
+      <div class="tl-texto">
+        El equipo derrota a Callaghan y salva a su hija del portal dimensional.
+        Baymax se sacrifica para rescatarla. Hiro, destrozado de nuevo, descubre que dentro
+        del cohete tiene el chip original de Baymax con sus valores grabados. Lo reconstruye.
+        El equipo sigue adelante. Hiro se matricula en el SFIT.
+      </div>
+      <div class="pregunta-vida">
+        ¿Qué hace que alguien decida empezar de nuevo después de algo muy difícil?
+        ¿Cómo se puede honrar a alguien que ya no está?
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== SECCIÓN PERSONAJES ===== -->
+<section id="personajes" class="seccion">
+  <div class="sec-titulo">👥 Los personajes</div>
+  <p class="sec-subtitulo">Descripción oculta · El docente decide cuándo revelar · Debate guiado por preguntas</p>
+
+  <div class="nota-docente">
+    <strong>Cómo usar esta sección:</strong> Cada tarjeta muestra solo el nombre y el rol del personaje.
+    Antes de revelar nada, pregunta al grupo en voz alta qué adjetivos le pondrían.
+    Recoge respuestas orales. Cuando hayas terminado el debate, pulsa
+    <strong>"Ver descripción"</strong> para confirmar o matizar lo que ha dicho la clase.
+    Después usa las <strong>preguntas de debate</strong> para profundizar.
+  </div>
+
+  <div class="grid-2">
+
+    <!-- HIRO -->
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">👦🏻</span>
+      <div class="tarjeta-nombre">HIRO HAMADA</div>
+      <div class="tarjeta-rol">Protagonista · 14 años · Robótica</div>
+      <div class="personaje-oculto" id="p-hiro" style="display:none;">
+        <div class="tarjeta-texto">
+          Genio de la robótica que usa su talento para peleas ilegales de robots.
+          Necesita perder algo importante para entender que el talento tiene que servir a los demás.
+          Su arco es el más completo: del egoísmo a la responsabilidad.
+        </div>
+        <div style="margin-top:8px;">
+          <span class="badge badge-valor">Superación · Resiliencia</span>
+          <span class="badge badge-antivalor">Talento sin propósito</span>
+        </div>
+        <div class="debate-box">
+          <div class="debate-titulo">💬 Preguntas para el debate</div>
+          <ul class="debate-lista">
+            <li>¿Conocéis a alguien que tenga mucho talento pero no lo use para nada bueno? ¿Qué le falta?</li>
+            <li>Hiro cambia mucho entre el principio y el final de la película. ¿Qué es lo que le hace cambiar?</li>
+            <li>¿Puede alguien ser muy listo y a la vez irresponsable? ¿Son cosas que van juntas o separadas?</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-revelar" onclick="revelarPersonaje('p-hiro', this)">👁 Ver descripción</button>
+    </div>
+
+    <!-- BAYMAX -->
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">🤖</span>
+      <div class="tarjeta-nombre">BAYMAX</div>
+      <div class="tarjeta-rol">Robot sanitario · Creación de Tadashi</div>
+      <div class="personaje-oculto" id="p-baymax" style="display:none;">
+        <div class="tarjeta-texto">
+          Robot de asistencia médica diseñado para cuidar sin juzgar.
+          Sus valores no son suyos: son los de Tadashi, grabados en su chip.
+          Cuando lo reprograman para hacer daño, deja de ser Baymax.
+          Cuando recupera el chip, se recupera a sí mismo.
+        </div>
+        <div style="margin-top:8px;">
+          <span class="badge badge-valor">Cuidado · Empatía · Ética</span>
+        </div>
+        <div class="debate-box">
+          <div class="debate-titulo">💬 Preguntas para el debate</div>
+          <ul class="debate-lista">
+            <li>¿Puede una máquina cuidar de verdad a alguien, o solo lo finge?</li>
+            <li>Si Baymax tiene los valores de Tadashi, ¿es Baymax una parte de Tadashi que sigue viva?</li>
+            <li>¿Qué pasaría si programaran a Baymax con valores malos desde el principio?</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-revelar" onclick="revelarPersonaje('p-baymax', this)">👁 Ver descripción</button>
+    </div>
+
+    <!-- TADASHI -->
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">🧑‍💻</span>
+      <div class="tarjeta-nombre">TADASHI HAMADA</div>
+      <div class="tarjeta-rol">Hermano mayor · Ingeniero · Mentor</div>
+      <div class="personaje-oculto" id="p-tadashi" style="display:none;">
+        <div class="tarjeta-texto">
+          No aparece casi en la película, pero lo mueve todo.
+          Creó a Baymax para cuidar a la gente. Murió intentando salvar a su profesor.
+          Su legado es lo que sostiene a Hiro hasta el final.
+        </div>
+        <div style="margin-top:8px;">
+          <span class="badge badge-valor">Generosidad · Sacrificio · Mentoría</span>
+        </div>
+        <div class="debate-box">
+          <div class="debate-titulo">💬 Preguntas para el debate</div>
+          <ul class="debate-lista">
+            <li>Tadashi muere intentando salvar a alguien. ¿Fue valiente o imprudente?</li>
+            <li>¿Tenemos responsabilidad sobre lo que hacemos con lo que creamos? ¿Y si lo usa mal otra persona?</li>
+            <li>¿Podemos dejarle algo a alguien sin estar presentes? ¿Cómo?</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-revelar" onclick="revelarPersonaje('p-tadashi', this)">👁 Ver descripción</button>
+    </div>
+
+    <!-- GO GO -->
+    <div class="tarjeta" style="border-color: rgba(245,200,66,0.4);">
+      <span class="tarjeta-emoji">⚡</span>
+      <div class="tarjeta-nombre">GO GO TOMAGO</div>
+      <div class="tarjeta-rol">Ingeniería magnética · Velocidad · Carácter</div>
+      <div class="personaje-oculto" id="p-gogo" style="display:none;">
+        <div class="tarjeta-texto">
+          Directa, exigente, sin rodeos. No pierde el tiempo con quejas.
+          Trabaja en discos magnéticos superrápidos. Bajo su dureza hay una lealtad absoluta.
+          En el momento más difícil, cuando Hiro pierde el control, ella es quien actúa.
+        </div>
+        <div style="margin-top:8px;">
+          <span class="badge badge-femenino">Referente femenino</span>
+          <span class="badge badge-valor">Determinación · Liderazgo · Lealtad</span>
+        </div>
+        <div class="debate-box">
+          <div class="debate-titulo">💬 Preguntas para el debate</div>
+          <ul class="debate-lista">
+            <li>Go Go parece fría pero es la primera en actuar cuando importa. ¿Puede alguien ser duro por fuera y leal por dentro?</li>
+            <li>¿Conocéis a alguien así en vuestra clase o en el deporte?</li>
+            <li>¿Es importante tener en el equipo a alguien que diga las verdades sin suavizarlas?</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-revelar" onclick="revelarPersonaje('p-gogo', this)">👁 Ver descripción</button>
+    </div>
+
+    <!-- HONEY LEMON -->
+    <div class="tarjeta" style="border-color: rgba(245,200,66,0.4);">
+      <span class="tarjeta-emoji">🧪</span>
+      <div class="tarjeta-nombre">HONEY LEMON</div>
+      <div class="tarjeta-rol">Química · Creatividad · Optimismo</div>
+      <div class="personaje-oculto" id="p-honey" style="display:none;">
+        <div class="tarjeta-texto">
+          Su bolso contiene un laboratorio en miniatura. Sintetiza compuestos químicos
+          al instante. Nunca pierde la sonrisa, pero no es ingenua: es la que más
+          claramente ve que reprogramar a Baymax para matar está mal.
+        </div>
+        <div style="margin-top:8px;">
+          <span class="badge badge-femenino">Referente femenino</span>
+          <span class="badge badge-valor">Creatividad · Valentía moral · Trabajo en equipo</span>
+        </div>
+        <div class="debate-box">
+          <div class="debate-titulo">💬 Preguntas para el debate</div>
+          <ul class="debate-lista">
+            <li>Honey Lemon es optimista pero tiene límites éticos muy claros. ¿Se puede ser alegre y serio a la vez?</li>
+            <li>¿Puede la creatividad resolver problemas que la fuerza no puede?</li>
+            <li>En vuestro equipo de EF, ¿quién haría el papel de Honey Lemon? ¿Hace falta ese papel?</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-revelar" onclick="revelarPersonaje('p-honey', this)">👁 Ver descripción</button>
+    </div>
+
+    <!-- WASABI -->
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">🟩</span>
+      <div class="tarjeta-nombre">WASABI</div>
+      <div class="tarjeta-rol">Física de plasma · Orden · Precaución</div>
+      <div class="personaje-oculto" id="p-wasabi" style="display:none;">
+        <div class="tarjeta-texto">
+          Tiene miedo. Lo dice. Y aun así actúa. Su personaje normaliza la ansiedad:
+          no es cobardía, es una emoción humana que no impide hacer lo correcto.
+          Es el más organizado del grupo y el que menos se cree que vayan a sobrevivir.
+        </div>
+        <div style="margin-top:8px;">
+          <span class="badge badge-valor">Valentía real · Honestidad · Disciplina</span>
+        </div>
+        <div class="debate-box">
+          <div class="debate-titulo">💬 Preguntas para el debate</div>
+          <ul class="debate-lista">
+            <li>Wasabi dice en voz alta que tiene miedo. ¿Es eso una señal de debilidad o de honestidad?</li>
+            <li>¿Habéis sentido alguna vez miedo antes de hacer algo en EF? ¿Lo dijisteis o lo ocultasteis?</li>
+            <li>¿Qué diferencia hay entre ser prudente y ser cobarde?</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-revelar" onclick="revelarPersonaje('p-wasabi', this)">👁 Ver descripción</button>
+    </div>
+
+    <!-- FRED -->
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">🧟</span>
+      <div class="tarjeta-nombre">FRED</div>
+      <div class="tarjeta-rol">Entusiasta · Sin formación científica · El diferente</div>
+      <div class="personaje-oculto" id="p-fred" style="display:none;">
+        <div class="tarjeta-texto">
+          No tiene talento científico. No importa. Su entusiasmo, su humor y su
+          capacidad de disfrutar son tan necesarios para el equipo como los cálculos de Wasabi.
+          Recuerda que en un equipo de verdad caben talentos muy distintos.
+        </div>
+        <div style="margin-top:8px;">
+          <span class="badge badge-valor">Diversidad · Inclusión · Alegría</span>
+        </div>
+        <div class="debate-box">
+          <div class="debate-titulo">💬 Preguntas para el debate</div>
+          <ul class="debate-lista">
+            <li>Fred no sabe ciencia pero es parte del equipo. ¿Qué aporta alguien que no tiene el talento del resto?</li>
+            <li>¿En vuestra clase hay alguien que anime sin ser el más hábil? ¿Qué valor tiene eso?</li>
+            <li>¿Un equipo de personas iguales funciona mejor que uno de personas distintas?</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-revelar" onclick="revelarPersonaje('p-fred', this)">👁 Ver descripción</button>
+    </div>
+
+    <!-- TÍA CASS -->
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">☕</span>
+      <div class="tarjeta-nombre">TÍA CASS</div>
+      <div class="tarjeta-rol">Tutora de Hiro y Tadashi · Cafetería</div>
+      <div class="personaje-oculto" id="p-cass" style="display:none;">
+        <div class="tarjeta-texto">
+          La figura adulta que sostiene a los dos hermanos sin agobiarlos.
+          No entiende la tecnología pero confía en ellos. Su cariño no viene con condiciones.
+          Es un modelo de cuidado sin paternalismo.
+        </div>
+        <div style="margin-top:8px;">
+          <span class="badge badge-femenino">Referente femenino</span>
+          <span class="badge badge-valor">Cuidado · Confianza · Presencia</span>
+        </div>
+        <div class="debate-box">
+          <div class="debate-titulo">💬 Preguntas para el debate</div>
+          <ul class="debate-lista">
+            <li>Cass no entiende lo que hacen Hiro y Tadashi pero confía en ellos. ¿Es suficiente con confiar aunque no entiendas?</li>
+            <li>¿Qué diferencia hay entre cuidar a alguien y controlarle?</li>
+            <li>¿Tenéis en vuestra vida a alguien que os apoye sin entender exactamente qué hacéis?</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-revelar" onclick="revelarPersonaje('p-cass', this)">👁 Ver descripción</button>
+    </div>
+
+    <!-- CALLAGHAN -->
+    <div class="tarjeta" style="border-color: rgba(232,51,58,0.3);">
+      <span class="tarjeta-emoji">🎭</span>
+      <div class="tarjeta-nombre">PROFESOR CALLAGHAN</div>
+      <div class="tarjeta-rol">Antagonista · Científico · Padre en duelo</div>
+      <div class="personaje-oculto" id="p-callaghan" style="display:none;">
+        <div class="tarjeta-texto">
+          ¿Es un villano o una víctima? Perdió a su hija por la irresponsabilidad de Krei.
+          Que su dolor sea real no hace que su venganza sea justa.
+          El personaje más complejo de la película: nos recuerda que el sufrimiento
+          no justifica hacer daño a otros.
+        </div>
+        <div style="margin-top:8px;">
+          <span class="badge badge-antivalor">Venganza · Uso del dolor como excusa</span>
+        </div>
+        <div class="debate-box">
+          <div class="debate-titulo">💬 Preguntas para el debate</div>
+          <ul class="debate-lista">
+            <li>Callaghan hace cosas muy malas, pero por razones muy humanas. ¿Eso le convierte en villano o en víctima?</li>
+            <li>¿El dolor puede justificar hacer daño a otros? ¿Dónde está el límite?</li>
+            <li>¿Habéis visto alguna vez a alguien hacer algo malo porque estaba muy enfadado o triste? ¿Cómo acabó?</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-revelar" onclick="revelarPersonaje('p-callaghan', this)">👁 Ver descripción</button>
+    </div>
+
+    <!-- KREI -->
+    <div class="tarjeta" style="border-color: rgba(232,51,58,0.3);">
+      <span class="tarjeta-emoji">💰</span>
+      <div class="tarjeta-nombre">ALISTAIR KREI</div>
+      <div class="tarjeta-rol">Empresario tecnológico · Sin ética</div>
+      <div class="personaje-oculto" id="p-krei" style="display:none;">
+        <div class="tarjeta-texto">
+          Quiere los microbots de Hiro para explotarlos comercialmente.
+          Cuando su portal causa un accidente, lo oculta.
+          El negocio primero, las personas después.
+          El personaje más actual de la película.
+        </div>
+        <div style="margin-top:8px;">
+          <span class="badge badge-antivalor">Avaricia · Irresponsabilidad · Encubrimiento</span>
+        </div>
+        <div class="debate-box">
+          <div class="debate-titulo">💬 Preguntas para el debate</div>
+          <ul class="debate-lista">
+            <li>Krei oculta un accidente grave para no perder dinero. ¿Eso ocurre solo en las películas?</li>
+            <li>¿Creéis que hay empresas reales que hacen algo parecido con vuestros datos o con el medioambiente?</li>
+            <li>¿Quién debería controlar que las empresas tecnológicas actúen de forma ética?</li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-revelar" onclick="revelarPersonaje('p-krei', this)">👁 Ver descripción</button>
+    </div>
+
+  </div>
+
+  <div class="nota-docente">
+    <strong>Pregunta de cierre (oral, sin revelar nada en pantalla):</strong>
+    ¿Con qué personaje os identificáis más? ¿Por qué?
+    ¿Y con cuál no os gustaría pareceros en absoluto?
+  </div>
+</section>
+
+
+<!-- ===== SECCIÓN VALORES EN EF ===== -->
+<section id="valores" class="seccion">
+  <div class="sec-titulo">⚽ Valores en Educación Física</div>
+  <p class="sec-subtitulo">Situaciones deportivas reales · Pulsa para revelar el valor que las conecta con la película</p>
+
+  <div class="nota-docente">
+    <strong>Dinámica:</strong> Lee la situación en voz alta. Pregunta al grupo "¿qué valor creéis que hay detrás?"
+    Recibe respuestas orales. Luego pulsa el botón para revelar la conexión con la película.
+  </div>
+
+  <div class="grid-2">
+
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">🤕</span>
+      <div class="tarjeta-nombre">SITUACIÓN 1 · La lesión</div>
+      <div class="tarjeta-texto" style="margin-bottom:12px;">
+        Lleváis semanas entrenando para el campeonato de atletismo.
+        A falta de tres días, te lesionas el tobillo. No podrás correr.
+        ¿Cómo reaccionas? ¿Te retiras del equipo o sigues ayudando desde fuera?
+      </div>
+      <button class="btn btn-outline" onclick="revelar('v1')">Revelar el valor →</button>
+      <div class="reveal-box" id="v1">
+        <strong>🔵 RESILIENCIA · Como Hiro tras perder a Tadashi</strong><br>
+        Hiro no desaparece para siempre. Tarda, sufre, pero vuelve.
+        Una lesión no es el final: es un paréntesis. Seguir apoyando al equipo desde fuera
+        también es parte del juego. Baymax le dice a Hiro: "Los que te quieren no quieren que te rindas".
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">🏅</span>
+      <div class="tarjeta-nombre">SITUACIÓN 2 · El equipo desigual</div>
+      <div class="tarjeta-texto" style="margin-bottom:12px;">
+        En educación física os forman equipos mixtos para un torneo.
+        Tu equipo tiene personas muy distintas: una muy rápida, otra muy fuerte,
+        otra que no destaca en nada pero que anima a todos.
+        ¿Cómo organizáis el equipo?
+      </div>
+      <button class="btn btn-outline" onclick="revelar('v2')">Revelar el valor →</button>
+      <div class="reveal-box" id="v2">
+        <strong>🔵 TRABAJO EN EQUIPO HETEROGÉNEO · Como Big Hero 6</strong><br>
+        El equipo de Hiro no es de iguales. Go Go es velocidad pura.
+        Wasabi es precisión. Fred no tiene habilidad científica pero tiene algo que
+        los demás no pueden comprar: ganas. En el deporte pasa igual.
+        El mejor equipo no es el de los más rápidos, sino el que sabe usar lo de cada uno.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">😤</span>
+      <div class="tarjeta-nombre">SITUACIÓN 3 · La rabia después de perder</div>
+      <div class="tarjeta-texto" style="margin-bottom:12px;">
+        Habéis perdido un partido en el último segundo. Creéis que fue injusto.
+        Un compañero dice algo que os saca de quicio.
+        ¿Qué hacéis en ese momento?
+      </div>
+      <button class="btn btn-outline" onclick="revelar('v3')">Revelar el valor →</button>
+      <div class="reveal-box" id="v3">
+        <strong>🔵 GESTIÓN EMOCIONAL · La reprogramación de Baymax</strong><br>
+        Hiro reprograma a Baymax para hacer daño porque no puede con su rabia.
+        El equipo lo frena. ¿Quién es tu equipo cuando explotas?
+        El deporte enseña que la rabia es normal. Lo que hacemos con ella, no tanto.
+        Parar un segundo antes de actuar marca la diferencia.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">🙈</span>
+      <div class="tarjeta-nombre">SITUACIÓN 4 · El miedo a intentarlo</div>
+      <div class="tarjeta-texto" style="margin-bottom:12px;">
+        Hay que hacer una habilidad nueva en EF que os da respeto: saltar una altura,
+        hacer una voltereta, tirarse al agua. Hay quien dice que no puede antes de intentarlo.
+        ¿Qué hacéis?
+      </div>
+      <button class="btn btn-outline" onclick="revelar('v4')">Revelar el valor →</button>
+      <div class="reveal-box" id="v4">
+        <strong>🔵 VALENTÍA REAL · Como Wasabi</strong><br>
+        Wasabi tiene miedo durante toda la película. Lo dice en voz alta.
+        Y aun así conduce, salta, pelea. El miedo no desaparece: aprendes a actuar con él.
+        Eso no es cobardía. Es exactamente lo contrario.
+        "Tengo miedo" no significa "no puedo". Significa "lo voy a intentar igualmente".
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">🎯</span>
+      <div class="tarjeta-nombre">SITUACIÓN 5 · El talento que no llega a nada</div>
+      <div class="tarjeta-texto" style="margin-bottom:12px;">
+        Hay alumnos que son muy buenos en un deporte pero nunca entrenan en serio,
+        llegan tarde o no respetan las normas del grupo porque creen que su talento
+        les da un pase especial. ¿Es justo? ¿Qué dice el equipo?
+      </div>
+      <button class="btn btn-outline" onclick="revelar('v5')">Revelar el valor →</button>
+      <div class="reveal-box" id="v5">
+        <strong>🔵 TALENTO CON PROPÓSITO · El Hiro del principio</strong><br>
+        Al inicio de la película, Hiro usa su genio para ganar dinero en peleas ilegales.
+        Su hermano le dice: "Puedes hacer mucho más con esto". El talento sin responsabilidad
+        no vale lo mismo que el talento puesto al servicio de algo o de alguien.
+        En el deporte, ser el mejor no te exime de las normas.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <span class="tarjeta-emoji">🤝</span>
+      <div class="tarjeta-nombre">SITUACIÓN 6 · Cuidar sin humillar</div>
+      <div class="tarjeta-texto" style="margin-bottom:12px;">
+        Un compañero se cae o falla algo delante de todos y se queda bloqueado.
+        ¿Cómo le ayudáis sin que se sienta peor?
+      </div>
+      <button class="btn btn-outline" onclick="revelar('v6')">Revelar el valor →</button>
+      <div class="reveal-box" id="v6">
+        <strong>🔵 CUIDADO SIN CONDESCENDENCIA · Baymax</strong><br>
+        Baymax nunca juzga a Hiro. No le dice "ya te lo decía yo" ni le da pena.
+        Le pregunta, le escucha, le acompaña. Cuidar no significa tratar a alguien
+        como si fuera incapaz. Significa estar ahí sin quitarle protagonismo.
+        En EF: animar, no compadecer.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===== SECCIÓN BAYMAX E IA ===== -->
+<section id="ia" class="seccion">
+  <div class="sec-titulo">🤖 Baymax y la Inteligencia Artificial</div>
+  <p class="sec-subtitulo">Lo que parecía ciencia ficción en 2014 · ¿Y en 2026?</p>
+
+  <div class="nota-docente">
+    <strong>Dinámica de las tarjetas:</strong> Muéstralas de una en una.
+    Antes de girarlas, pregunta: "¿Esto es ciencia ficción o ya es real?"
+    El grupo vota a mano alzada. Luego giráis la tarjeta para descubrir la respuesta.
+  </div>
+
+  <div class="highlight-box">
+    <strong>¿Por qué Baymax importa?</strong><br>
+    Baymax no es un robot cualquiera. Es un robot que cuida, que detecta emociones,
+    que aprende de quien lo usa y que tiene valores grabados por quien lo creó.
+    En 2014 eso parecía fantasía. En 2026, muchas de esas cosas ya existen.
+    Vamos a descubrirlas.
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('girada')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-front-emoji">🗣️</div>
+          <div class="flip-front-texto">Un robot que te habla y entiende lo que dices</div>
+        </div>
+        <div class="flip-back es-realidad">
+          ✅ REAL<br>ChatGPT, Gemini, Claude, Siri, Alexa.<br>Hablan, entienden, responden.
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('girada')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-front-emoji">🏥</div>
+          <div class="flip-front-texto">Una máquina que diagnostica enfermedades</div>
+        </div>
+        <div class="flip-back es-realidad">
+          ✅ REAL<br>La IA analiza radiografías y resonancias con precisión igual o mayor que muchos médicos.
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('girada')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-front-emoji">💓</div>
+          <div class="flip-front-texto">Un objeto que mide tu pulso y temperatura en tiempo real</div>
+        </div>
+        <div class="flip-back es-realidad">
+          ✅ REAL<br>Relojes inteligentes, pulseras de actividad. Muchos de vosotros los lleváis puestos.
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('girada')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-front-emoji">🤖</div>
+          <div class="flip-front-texto">Un robot físico que cuida a personas mayores</div>
+        </div>
+        <div class="flip-back es-realidad">
+          ✅ CASI REAL<br>En Japón y Corea existen prototipos que acompañan, detectan caídas y avisan a familias.
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('girada')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-front-emoji">🧠</div>
+          <div class="flip-front-texto">Un implante en el cerebro que controla máquinas con el pensamiento</div>
+        </div>
+        <div class="flip-back es-realidad">
+          ✅ CASI REAL<br>Neuralink lleva implantes en humanos desde 2024. Una persona paralizada movió un cursor con la mente.
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('girada')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-front-emoji">🦾</div>
+          <div class="flip-front-texto">Miles de microbots controlados al mismo tiempo por una sola persona</div>
+        </div>
+        <div class="flip-back es-ficcion">
+          ⏳ AÚN FICCIÓN<br>Los enjambres de nanobots coordinados no existen todavía. Aunque los investigadores trabajan en ello.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="separador">
+
+  <div class="sec-titulo" style="font-size:1.1rem; margin-bottom:10px;">Baymax es Tadashi — la IA refleja a quien la crea</div>
+
+  <div class="highlight-box">
+    Los valores de Baymax no son suyos. Son los de Tadashi, grabados en su chip.
+    Cuando lo reprograman para matar, Baymax se resiste. Cuando le devuelven el chip original,
+    vuelve a ser él mismo. <strong>La IA no tiene valores propios: tiene los valores de quien la diseña.</strong>
+    Si los datos con los que aprende son injustos, la IA será injusta.
+    Si la persona que la programa quiere ayudar, la IA ayuda.
+  </div>
+
+  <div class="ia-comparativa">
+    <div class="ia-col ficcion">
+      <div class="ia-col-titulo">🎬 BAYMAX EN LA PELÍCULA</div>
+      <div class="ia-item"><div class="ia-item-dot"></div>Escanea el cuerpo de Hiro y detecta su estado emocional</div>
+      <div class="ia-item"><div class="ia-item-dot"></div>Aprende de las interacciones: el pulgar arriba mejora su protocolo</div>
+      <div class="ia-item"><div class="ia-item-dot"></div>Se niega a hacer daño porque así lo programó Tadashi</div>
+      <div class="ia-item"><div class="ia-item-dot"></div>Cuando lo reprograman para atacar, pierde su identidad</div>
+      <div class="ia-item"><div class="ia-item-dot"></div>Con el chip original restaurado, vuelve a ser él mismo</div>
+    </div>
+    <div class="ia-col realidad">
+      <div class="ia-col-titulo">🌐 LA IA REAL EN 2026</div>
+      <div class="ia-item"><div class="ia-item-dot"></div>Los modelos aprenden de millones de textos e imágenes generados por humanos</div>
+      <div class="ia-item"><div class="ia-item-dot"></div>Si esos datos tienen sesgos o errores, la IA los reproduce</div>
+      <div class="ia-item"><div class="ia-item-dot"></div>Las empresas deciden qué puede decir y qué no puede hacer</div>
+      <div class="ia-item"><div class="ia-item-dot"></div>Hay debate sobre si una IA debe poder negarse a hacer cosas dañinas</div>
+      <div class="ia-item"><div class="ia-item-dot"></div>Quien controla la IA tiene un poder enorme. ¿Quién debería controlarlo?</div>
+    </div>
+  </div>
+
+  <div class="nota-docente">
+    <strong>Pregunta de cierre:</strong> Si vosotros diseñarais a Baymax,
+    ¿qué tres reglas le pondríais que no pudiera romper nunca?
+    Recogemos respuestas en voz alta y las comparamos.
+  </div>
+</section>
+
+
+<!-- ===== SECCIÓN DILEMAS ===== -->
+<section id="dilemas" class="seccion">
+  <div class="sec-titulo">🧠 ¿Qué harías tú?</div>
+  <p class="sec-subtitulo">Dilemas morales · Debate oral primero · El docente abre la justificación cuando termina</p>
+
+  <div class="nota-docente">
+    <strong>Cómo usar esta sección:</strong> Lee el dilema en voz alta. El grupo debate y vota levantando la mano.
+    <strong>No hay respuesta correcta única</strong>: el objetivo es argumentar y escuchar al que piensa diferente.
+    Cuando el debate de cada dilema esté agotado, pulsa <strong>"Ver reflexión"</strong>
+    para que aparezca en pantalla la justificación de cada opción.
+  </div>
+
+  <!-- DILEMA 1 -->
+  <div class="dilema-card">
+    <div class="dilema-escena">Dilema 1 · La reprogramación de Baymax</div>
+    <div class="dilema-texto">
+      Hiro descubre que el villano es quien causó la muerte de su hermano.
+      Quita el chip de Baymax y lo convierte en un arma para vengarse.
+      Sus amigos lo detienen. ¿Tenían razón en pararlo?
+    </div>
+    <div class="dilema-opciones">
+      <button class="opc-btn" onclick="seleccionar(this,'d1')">A · Sí. La venganza nunca es la solución</button>
+      <button class="opc-btn" onclick="seleccionar(this,'d1')">B · No. Tenía razones para estar enfadado</button>
+      <button class="opc-btn" onclick="seleccionar(this,'d1')">C · Depende: ¿qué habría hecho Tadashi?</button>
+    </div>
+    <div style="margin-top:12px;">
+      <button class="btn-revelar" onclick="revelarPersonaje('ref-d1', this)">📖 Ver reflexión tras el debate</button>
+    </div>
+    <div class="personaje-oculto" id="ref-d1" style="display:none;">
+      <div class="debate-box" style="margin-top:10px;">
+        <div class="debate-titulo">🔍 Reflexión para cerrar el debate</div>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6; margin-bottom:8px;">
+          <strong style="color:#2ecc71;">Opción A:</strong> La más sostenible. El equipo para a Hiro porque entiende que la venganza no devuelve a Tadashi
+          y convierte a Hiro en algo que Tadashi no querría ver. Actuar desde el dolor suele empeorar las cosas.
+        </p>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6; margin-bottom:8px;">
+          <strong style="color:var(--amarillo-miel);">Opción B:</strong> Comprensible humanamente. El enfado de Hiro es legítimo. Pero tener razón para estar enfadado
+          no convierte en correcta cualquier acción. El derecho al dolor no es el derecho a hacer daño.
+        </p>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6;">
+          <strong style="color:var(--cyan-baymax);">Opción C:</strong> La más profunda. Tadashi creó a Baymax para curar. Usarlo para matar
+          traiciona exactamente lo que Tadashi era. A veces la pregunta "¿qué haría la persona que quiero?" nos da la respuesta más clara.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DILEMA 2 -->
+  <div class="dilema-card">
+    <div class="dilema-escena">Dilema 2 · El secreto de Krei</div>
+    <div class="dilema-texto">
+      Krei sabe que su portal causó la desaparición de la hija de Callaghan.
+      Lo oculta para no perder su empresa. Años después, Callaghan lo destruye todo
+      para vengarse. ¿Quién tiene más responsabilidad en lo que pasó?
+    </div>
+    <div class="dilema-opciones">
+      <button class="opc-btn" onclick="seleccionar(this,'d2')">A · Krei. Sin su secreto, nada habría pasado</button>
+      <button class="opc-btn" onclick="seleccionar(this,'d2')">B · Callaghan. El dolor no justifica el daño a otros</button>
+      <button class="opc-btn" onclick="seleccionar(this,'d2')">C · Los dos son responsables, cada uno de algo diferente</button>
+    </div>
+    <div style="margin-top:12px;">
+      <button class="btn-revelar" onclick="revelarPersonaje('ref-d2', this)">📖 Ver reflexión tras el debate</button>
+    </div>
+    <div class="personaje-oculto" id="ref-d2" style="display:none;">
+      <div class="debate-box" style="margin-top:10px;">
+        <div class="debate-titulo">🔍 Reflexión para cerrar el debate</div>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6; margin-bottom:8px;">
+          <strong style="color:var(--cyan-baymax);">Opción C es la más completa:</strong> Krei inicia la cadena ocultando un accidente grave para proteger su negocio.
+          Sin ese silencio, Callaghan no habría tenido motivo. Pero Callaghan elige la destrucción masiva,
+          poniendo en peligro a personas inocentes. Los dos son responsables, en momentos distintos y de cosas distintas.
+        </p>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6; margin-bottom:8px;">
+          <strong style="color:#2ecc71);">Opción A:</strong> Tiene mucha lógica. Krei es el origen. Sin su irresponsabilidad, nada de lo demás ocurre.
+          La causa raíz importa.
+        </p>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6;">
+          <strong style="color:var(--amarillo-miel);">Opción B:</strong> También es válida. El dolor de Callaghan es real, pero elegir destruir no es la única respuesta posible.
+          El sufrimiento no anula la responsabilidad de lo que hacemos con él.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DILEMA 3 -->
+  <div class="dilema-card">
+    <div class="dilema-escena">Dilema 3 · El sacrificio de Baymax</div>
+    <div class="dilema-texto">
+      Baymax sabe que si usa su propulsor para sacar a Hiro del portal dimensional,
+      él no podrá salir. Se lo dice a Hiro. Hiro no quiere que lo haga.
+      Baymax lo hace igualmente. ¿Tenía derecho Baymax a decidir eso solo?
+    </div>
+    <div class="dilema-opciones">
+      <button class="opc-btn" onclick="seleccionar(this,'d3')">A · Sí. Era la única salida y eligió salvar a Hiro</button>
+      <button class="opc-btn" onclick="seleccionar(this,'d3')">B · No. Hiro debería haber podido decidir también</button>
+      <button class="opc-btn" onclick="seleccionar(this,'d3')">C · Hay situaciones en las que hay que actuar aunque duela</button>
+    </div>
+    <div style="margin-top:12px;">
+      <button class="btn-revelar" onclick="revelarPersonaje('ref-d3', this)">📖 Ver reflexión tras el debate</button>
+    </div>
+    <div class="personaje-oculto" id="ref-d3" style="display:none;">
+      <div class="debate-box" style="margin-top:10px;">
+        <div class="debate-titulo">🔍 Reflexión para cerrar el debate</div>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6; margin-bottom:8px;">
+          <strong style="color:var(--cyan-baymax);">Opciones A y C son compatibles:</strong> Baymax sí informa a Hiro. No actúa a escondidas.
+          Pero actúa igualmente porque su programación le dice que la vida de Hiro es prioritaria.
+          Es uno de los momentos en que la película pregunta: ¿puede una IA tomar decisiones morales?
+        </p>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6; margin-bottom:8px;">
+          <strong style="color:var(--amarillo-miel);">Opción B:</strong> Plantea algo importante sobre la autonomía. ¿Tiene derecho Hiro a decidir si alguien se sacrifica por él?
+          En la vida real, hay situaciones en las que otra persona toma una decisión que nos afecta profundamente sin que podamos elegir.
+        </p>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6;">
+          <strong>Conexión con EF:</strong> ¿Alguna vez alguien del equipo ha tomado una decisión en un partido que os afectó a todos
+          sin consultaros? ¿Fue lo correcto?
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DILEMA 4 -->
+  <div class="dilema-card">
+    <div class="dilema-escena">Dilema 4 · La app que te conoce demasiado bien</div>
+    <div class="dilema-texto">
+      Una empresa lanza una pulsera que analiza tus emociones, tu salud y tu actividad física
+      y las comparte con otras empresas para enviarte publicidad personalizada.
+      Gratis. ¿La usarías?
+    </div>
+    <div class="dilema-opciones">
+      <button class="opc-btn" onclick="seleccionar(this,'d4')">A · Sí. La información que recoge me ayuda</button>
+      <button class="opc-btn" onclick="seleccionar(this,'d4')">B · No. Mis datos son míos</button>
+      <button class="opc-btn" onclick="seleccionar(this,'d4')">C · Depende de qué datos exactamente comparten</button>
+    </div>
+    <div style="margin-top:12px;">
+      <button class="btn-revelar" onclick="revelarPersonaje('ref-d4', this)">📖 Ver reflexión tras el debate</button>
+    </div>
+    <div class="personaje-oculto" id="ref-d4" style="display:none;">
+      <div class="debate-box" style="margin-top:10px;">
+        <div class="debate-titulo">🔍 Reflexión para cerrar el debate</div>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6; margin-bottom:8px;">
+          <strong style="color:var(--cyan-baymax);">Opción C es la más madura:</strong> No es una pregunta de sí o no. Depende de qué datos, a quién,
+          con qué control tuyo. Pero en la práctica, casi nadie lee los términos y condiciones.
+          Eso es lo que las empresas como Krei cuentan que pase.
+        </p>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6; margin-bottom:8px;">
+          <strong style="color:#2ecc71;">Opción B:</strong> La más protectora de tu privacidad. Los datos de salud son especialmente sensibles:
+          una aseguradora, un empleador o una empresa de publicidad puede usarlos de formas que no imaginas.
+        </p>
+        <p style="font-size:0.82rem; color:#aabbd4; line-height:1.6;">
+          <strong style="color:var(--amarillo-miel);">Opción A:</strong> Válida si sabes exactamente qué cedes. El problema es que "gratis" en tecnología
+          casi siempre significa que el producto eres tú. Krei haría exactamente eso.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nota-docente">
+    <strong>Cierre oral:</strong> ¿Qué dilema os ha resultado más difícil?
+    ¿Por qué las preguntas sin respuesta fácil son las más importantes de pensar?
+  </div>
+</section>
+
+
+<!-- ===== SECCIÓN NORMAS ===== -->
+<section id="normas" class="seccion">
+  <div class="sec-titulo">📋 Nuestras normas de equipo</div>
+  <p class="sec-subtitulo">El cierre colectivo · Debate oral · Pistas disponibles si el grupo se bloquea</p>
+
+  <div class="nota-docente">
+    <strong>Cómo usar esta sección:</strong> Para cada norma, lanzad primero la pregunta generadora en voz alta.
+    Si el grupo se bloquea o necesita un empujón, pulsa <strong>"Ver pista"</strong> para que aparezca
+    un ejemplo inspirado en la película. El docente modera, el grupo decide la redacción final
+    y alguien la escribe en el campo de texto.
+  </div>
+
+  <div class="highlight-box">
+    <strong>Recordad estos momentos antes de empezar:</strong><br>
+    · Wasabi tiene miedo y actúa igualmente · Fred no es científico y es igual de necesario<br>
+    · Go Go frena a Hiro cuando va a hacer algo malo · Honey Lemon no pierde la sonrisa pero sí la ética<br>
+    · Baymax cuida sin juzgar, sin pena, sin condescendencia
+  </div>
+
+  <!-- NORMA 1 -->
+  <div class="norma-bloque">
+    <div class="norma-fila">
+      <span class="norma-numero">1</span>
+      <input class="norma-input" type="text" placeholder="Nuestra primera norma de equipo...">
+    </div>
+    <div class="norma-pregunta">💬 ¿Cómo tratamos a alguien que tiene miedo o que no se cree capaz?</div>
+    <button class="btn-revelar btn-revelar-pista" onclick="revelarPersonaje('pista-1', this)">💡 Ver pista</button>
+    <div class="personaje-oculto" id="pista-1" style="display:none;">
+      <div class="pista-box">
+        <strong>Inspiración — Wasabi:</strong> Wasabi tiene miedo durante toda la película y lo dice en voz alta.
+        Nadie le ridiculiza. El equipo le necesita igualmente. Una norma posible:
+        <em>"En nuestro equipo, decir que tienes miedo está permitido. Lo que no se permite es reírse de ello."</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- NORMA 2 -->
+  <div class="norma-bloque">
+    <div class="norma-fila">
+      <span class="norma-numero">2</span>
+      <input class="norma-input" type="text" placeholder="Segunda norma...">
+    </div>
+    <div class="norma-pregunta">💬 ¿Qué hacemos cuando alguien está haciendo algo que perjudica al grupo?</div>
+    <button class="btn-revelar btn-revelar-pista" onclick="revelarPersonaje('pista-2', this)">💡 Ver pista</button>
+    <div class="personaje-oculto" id="pista-2" style="display:none;">
+      <div class="pista-box">
+        <strong>Inspiración — Go Go y el equipo frenan a Hiro:</strong> Cuando Hiro está a punto de hacer algo muy malo,
+        sus amigos no se quedan callados. Le paran. No por mandarlo, sino porque se preocupan por él.
+        Una norma posible: <em>"Si alguien del equipo va a hacer algo injusto, se lo decimos. Sin gritos. Sin burlas."</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- NORMA 3 -->
+  <div class="norma-bloque">
+    <div class="norma-fila">
+      <span class="norma-numero">3</span>
+      <input class="norma-input" type="text" placeholder="Tercera norma...">
+    </div>
+    <div class="norma-pregunta">💬 ¿Cómo participamos quienes no somos los más hábiles o rápidos?</div>
+    <button class="btn-revelar btn-revelar-pista" onclick="revelarPersonaje('pista-3', this)">💡 Ver pista</button>
+    <div class="personaje-oculto" id="pista-3" style="display:none;">
+      <div class="pista-box">
+        <strong>Inspiración — Fred:</strong> Fred no tiene formación científica. Aun así, es parte esencial del equipo.
+        Su entusiasmo, su humor y su creatividad hacen posible cosas que la ciencia sola no consigue.
+        Una norma posible: <em>"Todos aportamos algo. No solo el más rápido o el más fuerte."</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- NORMA 4 -->
+  <div class="norma-bloque">
+    <div class="norma-fila">
+      <span class="norma-numero">4</span>
+      <input class="norma-input" type="text" placeholder="Cuarta norma...">
+    </div>
+    <div class="norma-pregunta">💬 ¿Cómo ayudamos a alguien que falla o que se cae sin que se sienta peor?</div>
+    <button class="btn-revelar btn-revelar-pista" onclick="revelarPersonaje('pista-4', this)">💡 Ver pista</button>
+    <div class="personaje-oculto" id="pista-4" style="display:none;">
+      <div class="pista-box">
+        <strong>Inspiración — Baymax:</strong> Baymax no juzga a Hiro. No le dice "ya te lo dije" ni le da pena.
+        Le pregunta, le escucha, le acompaña. Cuidar no es tratar a alguien como incapaz.
+        Una norma posible: <em>"Cuando alguien falla, le ayudamos. Sin caras de pena y sin reírnos."</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- NORMA 5 -->
+  <div class="norma-bloque">
+    <div class="norma-fila">
+      <span class="norma-numero">5</span>
+      <input class="norma-input" type="text" placeholder="Quinta norma...">
+    </div>
+    <div class="norma-pregunta">💬 ¿Qué hacemos cuando perdemos o cuando algo sale mal?</div>
+    <button class="btn-revelar btn-revelar-pista" onclick="revelarPersonaje('pista-5', this)">💡 Ver pista</button>
+    <div class="personaje-oculto" id="pista-5" style="display:none;">
+      <div class="pista-box">
+        <strong>Inspiración — Hiro tras perder a Tadashi:</strong> Hiro no desaparece para siempre.
+        Tarda, sufre, pero vuelve. Y cuando vuelve, lo hace con más sentido que antes.
+        Una norma posible: <em>"Perder no es el final. Lo importante es cómo volvemos."</em>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div class="nota-docente">
+    <strong>Pregunta de cierre:</strong> ¿Cuál de estas normas creéis que va a ser la más difícil de cumplir?
+    ¿Por qué? ¿Qué haría Baymax si alguien la rompiese?
+  </div>
+</section>
+
+<!-- ===== TEST FINAL ===== -->
+<section id="test" class="seccion">
+  <div class="sec-titulo">✅ Test final</div>
+  <p class="sec-subtitulo">10 preguntas · 4 categorías · Feedback inmediato</p>
+
+  <div class="test-barra">
+    <div class="test-progreso" id="progreso-barra" style="width:0%"></div>
+  </div>
+  <div class="test-contador" id="test-contador">Pregunta 1 de 10</div>
+
+  <!-- PREGUNTA 1 -->
+  <div class="test-pregunta activa" id="tp1">
+    <div class="test-categoria">🎬 Trama</div>
+    <div class="test-enunciado">¿Qué usa Hiro al principio de la película para ganar dinero?</div>
+    <div class="test-opciones">
+      <button class="test-opc" onclick="responder(this, false, 1, 'Hiro vende inventos en un mercado del barrio.')">A · Vende inventos en el mercado</button>
+      <button class="test-opc" onclick="responder(this, true, 1, 'Correcto. Hiro participa en peleas clandestinas de robots para ganar dinero.')">B · Peleas clandestinas de robots</button>
+      <button class="test-opc" onclick="responder(this, false, 1, 'Tadashi trabaja en el laboratorio, no Hiro al inicio.')">C · Trabaja en el laboratorio de Tadashi</button>
+    </div>
+    <div class="test-feedback" id="tf1"></div>
+  </div>
+
+  <!-- PREGUNTA 2 -->
+  <div class="test-pregunta" id="tp2">
+    <div class="test-categoria">👥 Personajes</div>
+    <div class="test-enunciado">¿Qué es Baymax exactamente? ¿Para qué fue creado?</div>
+    <div class="test-opciones">
+      <button class="test-opc" onclick="responder(this, false, 2, 'Baymax no es un robot de combate. Ese es el papel que Hiro le intenta imponer.')">A · Un robot de combate diseñado por el ejército</button>
+      <button class="test-opc" onclick="responder(this, false, 2, 'Baymax no gestiona el hogar. Tiene una función sanitaria específica.')">B · Un asistente del hogar para las tareas domésticas</button>
+      <button class="test-opc" onclick="responder(this, true, 2, 'Exacto. Baymax es un robot de asistencia sanitaria creado por Tadashi para cuidar a las personas.')">C · Un robot de asistencia sanitaria creado por Tadashi</button>
+    </div>
+    <div class="test-feedback" id="tf2"></div>
+  </div>
+
+  <!-- PREGUNTA 3 -->
+  <div class="test-pregunta" id="tp3">
+    <div class="test-categoria">👥 Personajes</div>
+    <div class="test-enunciado">¿Quién cuida a Hiro y Tadashi en casa? ¿Qué relación tiene con ellos?</div>
+    <div class="test-opciones">
+      <button class="test-opc" onclick="responder(this, false, 3, 'Cass no es su abuela. Es su tía, la hermana de su madre.')">A · Su abuela Cass</button>
+      <button class="test-opc" onclick="responder(this, true, 3, 'Correcto. Cass es su tía, quien los acoge y los cría con mucho cariño.')">B · Su tía Cass</button>
+      <button class="test-opc" onclick="responder(this, false, 3, 'Sus padres no aparecen en la película. Hiro y Tadashi están al cuidado de su tía.')">C · Sus padres, que trabajan todo el día</button>
+    </div>
+    <div class="test-feedback" id="tf3"></div>
+  </div>
+
+  <!-- PREGUNTA 4 -->
+  <div class="test-pregunta" id="tp4">
+    <div class="test-categoria">💎 Valores</div>
+    <div class="test-enunciado">Wasabi tiene miedo durante toda la película pero actúa igualmente. ¿Qué valor representa eso?</div>
+    <div class="test-opciones">
+      <button class="test-opc" onclick="responder(this, false, 4, 'La imprudencia sería actuar sin pensar en las consecuencias. Wasabi las conoce perfectamente.')">A · Imprudencia</button>
+      <button class="test-opc" onclick="responder(this, true, 4, 'Exacto. La valentía real no es no tener miedo: es actuar a pesar de él. Wasabi lo demuestra.')">B · Valentía real</button>
+      <button class="test-opc" onclick="responder(this, false, 4, 'La indiferencia sería no sentir nada. Wasabi siente mucho miedo, y actúa igualmente.')">C · Indiferencia</button>
+    </div>
+    <div class="test-feedback" id="tf4"></div>
+  </div>
+
+  <!-- PREGUNTA 5 -->
+  <div class="test-pregunta" id="tp5">
+    <div class="test-categoria">🤖 Baymax e IA</div>
+    <div class="test-enunciado">¿Qué pasa cuando Hiro quita el chip de valores de Baymax?</div>
+    <div class="test-opciones">
+      <button class="test-opc" onclick="responder(this, false, 5, 'Baymax no mejora al quitarle el chip: pierde su identidad y sus valores.')">A · Baymax se vuelve más inteligente</button>
+      <button class="test-opc" onclick="responder(this, false, 5, 'Baymax no se apaga. Se convierte en un robot sin ética, dispuesto a hacer daño.')">B · Baymax se apaga y deja de funcionar</button>
+      <button class="test-opc" onclick="responder(this, true, 5, 'Correcto. Sin el chip, Baymax pierde sus valores y se convierte en una máquina de ataque.')">C · Baymax pierde sus valores y se convierte en una máquina de ataque</button>
+    </div>
+    <div class="test-feedback" id="tf5"></div>
+  </div>
+
+  <!-- PREGUNTA 6 -->
+  <div class="test-pregunta" id="tp6">
+    <div class="test-categoria">👥 Personajes</div>
+    <div class="test-enunciado">Go Go y Honey Lemon son dos referentes femeninos clave. ¿Cuál es el perfil de Go Go?</div>
+    <div class="test-opciones">
+      <button class="test-opc" onclick="responder(this, true, 6, 'Correcto. Go Go es ingeniería de precisión, velocidad y carácter directo. Muy poca charla, mucha acción.')">A · Ingeniería magnética, velocidad, carácter directo</button>
+      <button class="test-opc" onclick="responder(this, false, 6, 'Ese es el perfil de Honey Lemon, no de Go Go.')">B · Química, creatividad, optimismo permanente</button>
+      <button class="test-opc" onclick="responder(this, false, 6, 'Ese es el perfil de Wasabi, no de Go Go.')">C · Física de plasma, orden y precaución</button>
+    </div>
+    <div class="test-feedback" id="tf6"></div>
+  </div>
+
+  <!-- PREGUNTA 7 -->
+  <div class="test-pregunta" id="tp7">
+    <div class="test-categoria">🎬 Trama</div>
+    <div class="test-enunciado">¿Quién resulta ser el villano enmascarado de la película?</div>
+    <div class="test-opciones">
+      <button class="test-opc" onclick="responder(this, false, 7, 'Krei es el empresario sin ética, pero no es el villano enmascarado.')">A · Alistair Krei, el empresario</button>
+      <button class="test-opc" onclick="responder(this, true, 7, 'Correcto. El profesor Callaghan finge su muerte y usa los microbots de Hiro para vengarse de Krei.')">B · El profesor Callaghan</button>
+      <button class="test-opc" onclick="responder(this, false, 7, 'Tadashi muere en el incendio. No es el villano.')">C · Tadashi Hamada</button>
+    </div>
+    <div class="test-feedback" id="tf7"></div>
+  </div>
+
+  <!-- PREGUNTA 8 -->
+  <div class="test-pregunta" id="tp8">
+    <div class="test-categoria">🤖 Baymax e IA</div>
+    <div class="test-enunciado">¿Cuál de estas tecnologías de la película ya es real en 2026?</div>
+    <div class="test-opciones">
+      <button class="test-opc" onclick="responder(this, false, 8, 'Los microbots coordinados por miles no existen todavía. Eso sigue siendo ciencia ficción.')">A · Miles de microbots controlados por una sola persona</button>
+      <button class="test-opc" onclick="responder(this, true, 8, 'Correcto. Los relojes inteligentes y pulseras miden pulso, temperatura y actividad exactamente como Baymax.')">B · Un objeto que mide tu pulso y estado físico en tiempo real</button>
+      <button class="test-opc" onclick="responder(this, false, 8, 'La teletransportación física no existe. El portal de la película sigue siendo ficción.')">C · Teletransportación instantánea de objetos</button>
+    </div>
+    <div class="test-feedback" id="tf8"></div>
+  </div>
+
+  <!-- PREGUNTA 9 -->
+  <div class="test-pregunta" id="tp9">
+    <div class="test-categoria">💎 Valores</div>
+    <div class="test-enunciado">Al inicio de la película, Hiro usa su talento para peleas ilegales de robots. ¿Qué antivalor representa?</div>
+    <div class="test-opciones">
+      <button class="test-opc" onclick="responder(this, false, 9, 'Hiro no es cobarde. Al contrario, se mete en situaciones peligrosas sin dudarlo.')">A · Cobardía</button>
+      <button class="test-opc" onclick="responder(this, false, 9, 'Hiro no es deshonesto con sus amigos. El problema es para qué usa su talento.')">B · Deshonestidad</button>
+      <button class="test-opc" onclick="responder(this, true, 9, 'Exacto. Tener un talento enorme y no usarlo para nada importante es talento sin propósito. Eso cambia cuando conoce el SFIT.')">C · Talento sin propósito</button>
+    </div>
+    <div class="test-feedback" id="tf9"></div>
+  </div>
+
+  <!-- PREGUNTA 10 -->
+  <div class="test-pregunta" id="tp10">
+    <div class="test-categoria">💎 Valores</div>
+    <div class="test-enunciado">¿Qué hace que el equipo de Big Hero 6 funcione, siendo tan distintos entre sí?</div>
+    <div class="test-opciones">
+      <button class="test-opc" onclick="responder(this, false, 10, 'Tener los mismos estudios no es lo que los une. Honey Lemon es química, Go Go ingeniería, Fred no es científico.')">A · Que todos tienen los mismos estudios y el mismo talento</button>
+      <button class="test-opc" onclick="responder(this, false, 10, 'El dinero no es lo que los motiva. Les mueve algo más importante.')">B · Que cobran mucho dinero por trabajar juntos</button>
+      <button class="test-opc" onclick="responder(this, true, 10, 'Exacto. Cada uno aporta algo diferente y se cuidan entre sí. Eso es exactamente lo que hace que un equipo de verdad funcione.')">C · Que cada uno aporta algo diferente y se cuidan entre sí</button>
+    </div>
+    <div class="test-feedback" id="tf10"></div>
+  </div>
+
+  <!-- RESULTADO FINAL -->
+  <div class="resultado-final" id="resultado-final">
+    <div class="resultado-puntos" id="resultado-num">0/10</div>
+    <div class="resultado-mensaje" id="resultado-msg"></div>
+    <div class="resultado-sub" id="resultado-sub"></div>
+    <br>
+    <button class="btn btn-outline" onclick="reiniciarTest()">Volver a intentarlo</button>
+  </div>
+</section>
+
+<footer>
+  Aprendemos con el cine · Big Hero 6 (Disney Animation, 2014) · CEIP San Fernando · Dos Hermanas (Sevilla) · Educación Física 3er ciclo
+</footer>
+
+
+<script>
+// ===== NAVEGACIÓN =====
+function ir(id, btn) {
+  document.querySelectorAll('.seccion').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('activo'));
+  var sec = document.getElementById(id);
+  if (sec) { sec.classList.add('visible'); }
+  if (btn) { btn.classList.add('activo'); }
+  window.scrollTo(0, 0);
+}
+
+// ===== REVELAR GENÉRICO (valores en EF) =====
+function revelar(id) {
+  var box = document.getElementById(id);
+  if (!box) return;
+  box.classList.toggle('visible');
+}
+
+// ===== REVELAR PERSONAJE / DILEMA / PISTA =====
+function revelarPersonaje(id, btn) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var visible = el.style.display !== 'none';
+  if (visible) {
+    el.style.display = 'none';
+    if (btn) { btn.textContent = btn.textContent.replace('Ocultar', '').trim(); btn.classList.remove('abierto'); }
+  } else {
+    el.style.display = 'block';
+    el.style.animation = 'fadeIn 0.3s ease';
+    if (btn) { btn.classList.add('abierto'); }
+  }
+}
+
+// ===== DILEMAS =====
+function seleccionar(btn, grupoId) {
+  var card = btn.closest('.dilema-card');
+  card.querySelectorAll('.opc-btn').forEach(function(b) {
+    b.classList.remove('seleccionada');
+  });
+  btn.classList.add('seleccionada');
+}
+
+// ===== TEST =====
+var testActual = 1;
+var testAciertos = 0;
+var testRespondida = false;
+
+function responder(btn, esCorrecta, num, feedback) {
+  if (testRespondida) return;
+  testRespondida = true;
+
+  var opts = btn.closest('.test-opciones').querySelectorAll('.test-opc');
+  opts.forEach(function(o) { o.disabled = true; });
+
+  var fb = document.getElementById('tf' + num);
+
+  if (esCorrecta) {
+    btn.classList.add('correcta');
+    testAciertos++;
+    fb.textContent = '✅ ' + feedback;
+    fb.className = 'test-feedback ok';
+  } else {
+    btn.classList.add('incorrecta');
+    // Marcar la correcta
+    opts.forEach(function(o) {
+      if (o.getAttribute('onclick') && o.getAttribute('onclick').indexOf('true') > -1) {
+        o.classList.add('correcta');
+      }
+    });
+    fb.textContent = '❌ ' + feedback;
+    fb.className = 'test-feedback mal';
+  }
+
+  setTimeout(function() {
+    if (testActual < 10) {
+      testActual++;
+      testRespondida = false;
+      mostrarPregunta(testActual);
+    } else {
+      mostrarResultado();
+    }
+  }, 2200);
+}
+
+function mostrarPregunta(num) {
+  for (var i = 1; i <= 10; i++) {
+    var p = document.getElementById('tp' + i);
+    if (p) { p.classList.remove('activa'); }
+  }
+  var actual = document.getElementById('tp' + num);
+  if (actual) { actual.classList.add('activa'); }
+  document.getElementById('test-contador').textContent = 'Pregunta ' + num + ' de 10';
+  document.getElementById('progreso-barra').style.width = ((num - 1) * 10) + '%';
+}
+
+function mostrarResultado() {
+  for (var i = 1; i <= 10; i++) {
+    var p = document.getElementById('tp' + i);
+    if (p) { p.classList.remove('activa'); }
+  }
+  document.getElementById('progreso-barra').style.width = '100%';
+  document.getElementById('test-contador').textContent = 'Test completado';
+
+  var rf = document.getElementById('resultado-final');
+  rf.classList.add('visible');
+  document.getElementById('resultado-num').textContent = testAciertos + '/10';
+
+  var msg, sub;
+  if (testAciertos === 10) {
+    msg = '🏆 ¡Perfecto! ¿Eres tú Hiro?';
+    sub = 'Dominas la película, los valores y la IA. Baymax estaría orgulloso.';
+  } else if (testAciertos >= 8) {
+    msg = '⚡ ¡Muy bien! Casi como Go Go.';
+    sub = 'Muy buen trabajo. Revisa los fallos y estarás en el equipo.';
+  } else if (testAciertos >= 6) {
+    msg = '🤖 Bien, pero Baymax necesita más datos.';
+    sub = 'Has respondido bien más de la mitad. Repasa la película y vuelve.';
+  } else {
+    msg = '💙 Ánimo. Wasabi también tenía miedo.';
+    sub = 'El equipo no abandona. Vuelve a intentarlo.';
+  }
+
+  document.getElementById('resultado-msg').textContent = msg;
+  document.getElementById('resultado-sub').textContent = sub;
+}
+
+function reiniciarTest() {
+  testActual = 1;
+  testAciertos = 0;
+  testRespondida = false;
+
+  for (var i = 1; i <= 10; i++) {
+    var p = document.getElementById('tp' + i);
+    if (!p) continue;
+    p.classList.remove('activa');
+    var opts = p.querySelectorAll('.test-opc');
+    opts.forEach(function(o) {
+      o.classList.remove('correcta', 'incorrecta');
+      o.disabled = false;
+    });
+    var fb = document.getElementById('tf' + i);
+    if (fb) { fb.className = 'test-feedback'; fb.textContent = ''; }
+  }
+
+  document.getElementById('tp1').classList.add('activa');
+  document.getElementById('progreso-barra').style.width = '0%';
+  document.getElementById('test-contador').textContent = 'Pregunta 1 de 10';
+  document.getElementById('resultado-final').classList.remove('visible');
+}
+</script>
+
+</body>
+</html>
